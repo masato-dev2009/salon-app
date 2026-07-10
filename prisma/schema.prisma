@@ -70,6 +70,7 @@ model Staff {
   updatedAt    DateTime      @updatedAt
   reservations Reservation[]
   user         User          @relation(fields: [userId], references: [id])
+  schedules StaffSchedule[]
 }
 
 model Menu {
@@ -105,19 +106,33 @@ model Reservation {
 
 model BusinessHour {
   id        String  @id @default(cuid())
-  dayOfWeek Int
-  openTime  String
-  closeTime String
+  dayOfWeek Int     @unique
+  openTime  String?
+  closeTime String?
   isClosed  Boolean @default(false)
 }
 
 model StaffSchedule {
   id        String   @id @default(cuid())
   staffId   String
-  date      DateTime
-  startTime String
-  endTime   String
+  dayOfWeek Int      
+  startTime String?  
+  endTime   String?  
   isHoliday Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  staff Staff @relation(fields: [staffId], references: [id])
+
+  @@unique([staffId, dayOfWeek])
+}
+model ClosedDay {
+  id        String   @id @default(cuid())
+  date      DateTime @unique
+  reason    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Role {

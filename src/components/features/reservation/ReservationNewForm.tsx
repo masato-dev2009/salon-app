@@ -12,11 +12,13 @@ import { ArrowButton } from '@/components/ui/arrow-button'
 type ReservationNewFormProps = {
   staffList: Staff[]
   menuList: Menu[]
+  closedDays: Date[]
 }
 
 export function ReservationNewForm({
   staffList,
   menuList,
+  closedDays,
 }: ReservationNewFormProps) {
   const [selectedStaffId, setSelectedStaffId] = useState('')
   const [selectedMenuId, setSelectedMenuId] = useState('')
@@ -45,6 +47,7 @@ export function ReservationNewForm({
         <DateSelector
           selectedDate={selectedDate}
           onSelectDate={setSelectedDate}
+          closedDays={closedDays}
         />
         <TimeSelector
           selectedTime={selectedTime}
