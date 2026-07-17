@@ -13,15 +13,19 @@ type ReservationNewFormProps = {
   staffList: Staff[]
   menuList: Menu[]
   closedDays: Date[]
+  businessClosedDayNumbers: number[]
 }
 
 export function ReservationNewForm({
   staffList,
   menuList,
   closedDays,
+  businessClosedDayNumbers,
 }: ReservationNewFormProps) {
   const [selectedStaffId, setSelectedStaffId] = useState('')
   const [selectedMenuId, setSelectedMenuId] = useState('')
+  const [selectedStaff, setSelectedStaff] = useState('')
+  const [selectedMenu, setSelectedMenu] = useState('')
   const [selectedDate, setSelectedDate] = useState<Date>()
   const [selectedTime, setSelectedTime] = useState('')
   const canProceed =
@@ -37,34 +41,39 @@ export function ReservationNewForm({
         <StaffSelector
           staffList={staffList}
           selectedStaffId={selectedStaffId}
-          onSelectStaff={setSelectedStaffId}
+          onSelectedStaffId={setSelectedStaffId}
+          onSelectStaff={setSelectedStaff}
         />
         <MenuSelector
           menuList={menuList}
           selectedMenuId={selectedMenuId}
-          onSelectMenu={setSelectedMenuId}
+          onSelectMenuId={setSelectedMenuId}
+          onSelectMenu={setSelectedMenu}
         />
         <DateSelector
           selectedDate={selectedDate}
           onSelectDate={setSelectedDate}
           closedDays={closedDays}
+          businessClosedDayNumbers={businessClosedDayNumbers}
         />
         <TimeSelector
           selectedTime={selectedTime}
           onSelectTime={setSelectedTime}
         />
         <div className='rounded-xl border p-6 text-sm'>
-          <p>selectedStaffId: {selectedStaffId || '未選択'}</p>
-          <p>selectedMenuId: {selectedMenuId || '未選択'}</p>
-          <p>selectedDate :{selectedDate?.toLocaleDateString() ?? '未選択'}</p>
-          <p>selectedTime: {selectedTime || '未選択'}</p>
+          <p>スタッフ: {selectedStaff || '未選択'}</p>
+          <p>メニュー: {selectedMenu || '未選択'}</p>
+          <p>日付:{selectedDate?.toLocaleDateString() ?? '未選択'}</p>
+          <p>時間: {selectedTime || '未選択'}</p>
         </div>
       </div>
-      <ArrowButton
-        href={`/reservation/check?staffId=${selectedStaffId}&menuId=${selectedMenuId}&date=${selectedDate?.toISOString()}&time=${selectedTime}`}
-        children={'確認'}
-        className={cn(!canProceed && 'pointer-events-none opacity-50')}
-      />
+      <div className='mt-6 flex justify-center'>
+        <ArrowButton
+          href={`/reservation/check?staffId=${selectedStaffId}&menuId=${selectedMenuId}&date=${selectedDate?.toISOString()}&time=${selectedTime}`}
+          children={'確認'}
+          className={cn(!canProceed && 'pointer-events-none opacity-50')}
+        />
+      </div>
     </section>
   )
 }

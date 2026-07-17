@@ -4,12 +4,14 @@ import { cn } from '@/lib/utils'
 type Props = {
   staffList: Staff[]
   selectedStaffId: string
-  onSelectStaff: (StaffId: string) => void
+  onSelectedStaffId: (StaffId: string) => void
+  onSelectStaff: (StaffName: string) => void
 }
 
 export function StaffSelector({
   staffList,
   selectedStaffId,
+  onSelectedStaffId,
   onSelectStaff,
 }: Props) {
   return (
@@ -24,11 +26,11 @@ export function StaffSelector({
               key={staff.id}
               type='button'
               onClick={() => {
-                onSelectStaff(staff.id)
+                ;(onSelectedStaffId(staff.id), onSelectStaff(staff.displayName))
               }}
               className={cn(
                 'rounded-xl border p-4 text-left transition hover:border-black',
-                isSelected && 'border-black bg-black text-white',
+                isSelected && 'border-black bg-[#0000001e]',
               )}
             >
               <p className='font-medium'>{staff.displayName}</p>

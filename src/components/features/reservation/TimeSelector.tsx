@@ -18,8 +18,8 @@ export function TimeSelector({ selectedTime, onSelectTime }: Props) {
               type='button'
               onClick={() => onSelectTime(time)}
               className={cn(
-                'rounded-full border px-4 py-2 text-sm transition hover:border-black',
-                isSelected && 'border-black bg-black text-white',
+                'rounded-xl border p-4 transition hover:border-black',
+                isSelected && 'border-black bg-[#0000001e]',
               )}
             >
               {time}

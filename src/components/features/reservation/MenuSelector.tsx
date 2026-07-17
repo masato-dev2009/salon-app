@@ -1,15 +1,16 @@
 import { Menu } from '@/generated/prisma/client'
 import { cn } from '@/lib/utils'
-import { useState } from 'react'
 
 type Props = {
   menuList: Menu[]
   selectedMenuId: string
-  onSelectMenu: (MenuId: string) => void
+  onSelectMenuId: (MenuId: string) => void
+  onSelectMenu: (Menu: string) => void
 }
 export function MenuSelector({
   menuList,
   selectedMenuId,
+  onSelectMenuId,
   onSelectMenu,
 }: Props) {
   return (
@@ -23,11 +24,12 @@ export function MenuSelector({
               key={menu.id}
               type='button'
               onClick={() => {
-                onSelectMenu(menu.id)
+                onSelectMenuId(menu.id)
+                onSelectMenu(menu.name)
               }}
               className={cn(
                 'rounded-xl border p-4 text-left transition hover:border-black',
-                isSelected && 'border-black bg-black text-white',
+                isSelected && 'border-black bg-[#0000001e]',
               )}
             >
               <p className='font-medium'>{menu.name}</p>
@@ -35,7 +37,8 @@ export function MenuSelector({
                 ¥{menu.price.toLocaleString()}
               </p>
               <p className='text-muted-foreground mt-1 text-sm'>
-                {menu.description}分
+                {menu.description}
+                {menu.durationMin}分
               </p>
             </button>
           )

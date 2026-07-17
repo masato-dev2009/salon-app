@@ -30,11 +30,26 @@ export default async function ReservationPage() {
       date: true,
     },
   })
+
+  // 毎週の店舗定休日を取得
+
+  const businessClosedDays = await prisma.businessHour.findMany({
+    where: {
+      isClosed: true,
+    },
+
+    select: {
+      dayOfWeek: true,
+    },
+  })
   return (
     <ReservationNewForm
       staffList={staffList}
       menuList={menuList}
       closedDays={closedDays.map((closedDay) => closedDay.date)}
+      businessClosedDayNumbers={businessClosedDays.map(
+        (businessHour) => businessHour.dayOfWeek,
+      )}
     />
   )
 }

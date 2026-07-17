@@ -2,6 +2,9 @@ import { ArrowButton } from '@/components/ui/arrow-button'
 import { prisma } from '@/lib/prisma'
 import { createReservation } from '@/actions/reservations/createReservation'
 import { redirect } from 'next/navigation'
+import { isBusinessClosed } from '@/lib/reservation/isBusinessClosed'
+import { isClosedDay } from '@/lib/reservation/isClosedDay'
+import { isStaffHoliday } from '@/lib/reservation/isStaffHoliday'
 
 type Props = {
   searchParams: Promise<{
@@ -18,12 +21,39 @@ export default async function ReservationCheckPage({ searchParams }: Props) {
   if (!staffId || !menuId || !date || !time) {
     return <div>不正なアクセスです。</div>
   }
-  const reservationInput = {
-    staffId: staffId as string,
-    menuId: menuId as string,
-    date: date as string,
-    time: time as string,
+
+  // 選択された日付と時間から予約開始日時を作る
+
+  const startTime = new Date(date)
+
+  const [hour, minute] = time.split(':').map(Number)
+
+  startTime.setHours(hour, minute, 0, 0)
+
+  // 毎週の店舗定休日を確認
+
+  const businessClosed = await isBusinessClosed(startTime)
+
+  if (businessClosed) {
+    return <div>この日は店舗の定休日です。</div>
   }
+
+  // 日付指定の臨時休業を確認
+
+  const closedDay = await isClosedDay(startTime)
+
+  if (closedDay) {
+    return <div>{closedDay.reason ?? 'この日は臨時休業です。'}</div>
+  }
+
+  // 選択されたスタッフが休みか確認
+
+  const staffHoliday = await isStaffHoliday(staffId, startTime)
+
+  if (staffHoliday) {
+    return <div>選択されたスタッフはこの日お休みです。</div>
+  }
+  const reservationInput = { staffId, menuId, date, time }
 
   async function handleSubmit() {
     'use server'
