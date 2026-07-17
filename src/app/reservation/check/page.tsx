@@ -1,6 +1,6 @@
 import { ArrowButton } from '@/components/ui/arrow-button'
 import { prisma } from '@/lib/prisma'
-import { createReservation } from '@/actions/reservations/createReservation'
+import { createReservation } from '@/actions/reservation/createReservation'
 import { redirect } from 'next/navigation'
 import { isBusinessClosed } from '@/lib/reservation/isBusinessClosed'
 import { isClosedDay } from '@/lib/reservation/isClosedDay'

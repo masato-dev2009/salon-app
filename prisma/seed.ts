@@ -189,23 +189,25 @@ import { prisma } from '@/lib/prisma'
 //   console.log('Seed data created.')
 // }
 async function main() {
-  await prisma.businessHour.upsert({
-    where: {
-      dayOfWeek: 2,
-    },
-    update: {
-      openTime: null,
-      closeTime: null,
-      isClosed: true,
-    },
-    create: {
-      dayOfWeek: 2,
-      openTime: null,
-      closeTime: null,
-      isClosed: true,
-    },
-  })
+  const businessHours = [
+    { dayOfWeek: 0, openTime: '10:00', closeTime: '20:00', isClosed: false },
+    { dayOfWeek: 1, openTime: '10:00', closeTime: '20:00', isClosed: false },
+    { dayOfWeek: 2, openTime: null, closeTime: null, isClosed: true },
+    { dayOfWeek: 3, openTime: '10:00', closeTime: '20:00', isClosed: false },
+    { dayOfWeek: 4, openTime: '10:00', closeTime: '20:00', isClosed: false },
+    { dayOfWeek: 5, openTime: '10:00', closeTime: '20:00', isClosed: false },
+    { dayOfWeek: 6, openTime: '10:00', closeTime: '20:00', isClosed: false },
+  ]
 
+  for (const businessHour of businessHours) {
+    await prisma.businessHour.upsert({
+      where: {
+        dayOfWeek: businessHour.dayOfWeek,
+      },
+      update: businessHour,
+      create: businessHour,
+    })
+  }
   /**
    * 店舗全体の臨時休業日を登録する
    *

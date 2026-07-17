@@ -1,28 +1,42 @@
-import { timeSlots } from '@/app/constant/timeSlots'
+import { TimeSlot } from '@/app/constant/timeSlots'
 import { cn } from '@/lib/utils'
 
 type Props = {
+  timeSlots: TimeSlot[]
   selectedTime: string
   onSelectTime: (time: string) => void
+  canSelectTime: boolean
 }
-export function TimeSelector({ selectedTime, onSelectTime }: Props) {
+export function TimeSelector({
+  timeSlots,
+  selectedTime,
+  onSelectTime,
+  canSelectTime,
+}: Props) {
   return (
     <section>
       <h2 className='text-xl font-medium'>Time</h2>
       <div className='mt-6 grid grid-cols-3 gap-3 md:grid-cols-5'>
-        {timeSlots.map((time) => {
-          const isSelected = selectedTime === time
+        {timeSlots.map((slot) => {
+          const isSelected = selectedTime === slot.time
+          const isDisabled = !canSelectTime || !slot.isAvailable
           return (
             <button
-              key={time}
+              key={slot.time}
               type='button'
-              onClick={() => onSelectTime(time)}
+              onClick={() => onSelectTime(slot.time)}
+              disabled={isDisabled}
               className={cn(
-                'rounded-xl border p-4 transition hover:border-black',
-                isSelected && 'border-black bg-[#0000001e]',
+                !canSelectTime
+                  ? 'bg-muted text-muted-foreground cursor-not-allowed rounded-md border px-3 py-2 opacity-40'
+                  : !slot.isAvailable
+                    ? 'bg-muted text-muted-foreground cursor-not-allowed rounded-md border px-3 py-2 opacity-60'
+                    : isSelected
+                      ? 'rounded-md border border-black bg-[#0000001e] px-3 py-2'
+                      : 'hover:bg-muted rounded-md border px-3 py-2 transition-colors',
               )}
             >
-              {time}
+              {slot.time}
             </button>
           )
         })}

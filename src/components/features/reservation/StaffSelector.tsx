@@ -6,6 +6,7 @@ type Props = {
   selectedStaffId: string
   onSelectedStaffId: (StaffId: string) => void
   onSelectStaff: (StaffName: string) => void
+  offSelectedStaffDate: (OffDate: undefined) => void
 }
 
 export function StaffSelector({
@@ -13,6 +14,7 @@ export function StaffSelector({
   selectedStaffId,
   onSelectedStaffId,
   onSelectStaff,
+  offSelectedStaffDate,
 }: Props) {
   return (
     <section>
@@ -26,7 +28,9 @@ export function StaffSelector({
               key={staff.id}
               type='button'
               onClick={() => {
-                ;(onSelectedStaffId(staff.id), onSelectStaff(staff.displayName))
+                ;((onSelectedStaffId(staff.id),
+                onSelectStaff(staff.displayName)),
+                  offSelectedStaffDate(undefined))
               }}
               className={cn(
                 'rounded-xl border p-4 text-left transition hover:border-black',
