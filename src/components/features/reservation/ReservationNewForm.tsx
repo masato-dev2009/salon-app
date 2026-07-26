@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { ArrowButton } from '@/components/ui/arrow-button'
 import { getAvailableTimeSlots } from '@/actions/reservation/getAvailableTimeSlots'
 import { defaultsTimeSlots, type TimeSlot } from '@/app/constant/timeSlots'
+import { container } from '@/components/layout/common/container'
 
 type ReservationNewFormProps = {
   staffList: Staff[]
@@ -114,9 +115,6 @@ export function ReservationNewForm({
         if (isCancelled) {
           return
         }
-
-        console.log('取得した時間:', times)
-
         /**
          * 定休日やスタッフ休日などで空配列が返った場合も、
          * 時間欄を消さず、すべて選択不可として表示する。
@@ -159,7 +157,7 @@ export function ReservationNewForm({
     `&time=${encodeURIComponent(selectedTime)}`
 
   return (
-    <section className='mx-auto max-w-5xl px-4 py-16'>
+    <section className={cn(container, 'py-16')}>
       <h1 className='text-3xl font-semibold tracking-widest'>RESERVATION</h1>
 
       <p className='text-muted-foreground mt-4 text-sm leading-7'>
@@ -181,22 +179,23 @@ export function ReservationNewForm({
           onSelectMenuId={setSelectedMenuId}
           onSelectMenu={setSelectedMenu}
         />
+        <div className='grid gap-8 md:grid-cols-2'>
+          <DateSelector
+            staffId={selectedStaffId}
+            selectedDate={selectedDate}
+            onSelectDate={setSelectedDate}
+            closedDays={closedDates}
+            businessClosedWeekdays={businessClosedWeekdays}
+            staffHolidaySchedules={staffHolidaySchedules}
+          />
 
-        <DateSelector
-          staffId={selectedStaffId}
-          selectedDate={selectedDate}
-          onSelectDate={setSelectedDate}
-          closedDays={closedDates}
-          businessClosedWeekdays={businessClosedWeekdays}
-          staffHolidaySchedules={staffHolidaySchedules}
-        />
-
-        <TimeSelector
-          selectedTime={selectedTime}
-          onSelectTime={setSelectedTime}
-          timeSlots={timeSlots}
-          canSelectTime={canSelectTime}
-        />
+          <TimeSelector
+            selectedTime={selectedTime}
+            onSelectTime={setSelectedTime}
+            timeSlots={timeSlots}
+            canSelectTime={canSelectTime}
+          />
+        </div>
 
         <div className='rounded-xl border p-6 text-sm'>
           <p>スタッフ: {selectedStaff || '未選択'}</p>

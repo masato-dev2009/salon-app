@@ -20,7 +20,9 @@ export function SectionHeading({
       <h2 className={cn('mt-4 text-4xl tracking-widest', className)}>
         {title}
       </h2>
-      <p className='text-muted-foreground mt-10 leading-9'>{description}</p>
+      <p className='text-muted-foreground mt-10 leading-9 whitespace-pre-line'>
+        {description}
+      </p>
     </div>
   )
 }

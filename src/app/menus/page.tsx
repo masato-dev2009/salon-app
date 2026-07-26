@@ -5,6 +5,8 @@ import { ArrowButton } from '@/components/ui/arrow-button'
 import { Logo } from '@/components/ui/logo'
 import { prisma } from '@/lib/prisma'
 import { FixedHeader } from '@/components/layout/common/FixedHeader'
+import { cn } from '@/lib/utils'
+import { container } from '@/components/layout/common/container'
 
 export default async function MenusPage() {
   const menus = await prisma.menu.findMany({
@@ -16,7 +18,7 @@ export default async function MenusPage() {
   return (
     <main className='bg-[rgb(247,243,237)]'>
       <FixedHeader>
-        <div className='flex items-center justify-between'>
+        <div className={cn(container, 'flex items-center justify-between')}>
           <Logo href='/' className='' />
           <ArrowButton href='/reservation/new/' children='ご予約はこちら' />
         </div>

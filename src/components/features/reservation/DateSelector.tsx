@@ -91,12 +91,12 @@ export function DateSelector({
     <section>
       <h2 className='text-xl font-medium'>Date</h2>
 
-      <div className='mt-6 rounded-xl border p-6'>
+      <div className='mt-6'>
         <Calendar
           mode='single'
           selected={selectedDate}
           onSelect={onSelectDate}
-          className='rounded-md'
+          className='w-full rounded-md border'
           disabled={[
             // スタッフを選ぶまでは、すべての日付を選択不可にする
             ...(staffId

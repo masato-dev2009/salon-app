@@ -4,10 +4,6 @@ export type TimeSlot = {
 }
 
 export const defaultsTimeSlots: TimeSlot[] = [
-  { time: '09:00', isAvailable: true },
-
-  { time: '09:30', isAvailable: true },
-
   { time: '10:00', isAvailable: true },
 
   { time: '10:30', isAvailable: true },
@@ -45,4 +41,8 @@ export const defaultsTimeSlots: TimeSlot[] = [
   { time: '18:30', isAvailable: true },
 
   { time: '19:00', isAvailable: true },
+
+  { time: '19:30', isAvailable: true },
+
+  { time: '20:00', isAvailable: true },
 ]

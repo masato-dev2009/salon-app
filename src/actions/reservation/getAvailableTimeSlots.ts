@@ -229,15 +229,14 @@ export async function getAvailableTimeSlots(
    */
   for (
     let startMinutes = openingMinutes;
-    startMinutes + durationMinutes <= closingMinutes;
+    startMinutes <= closingMinutes;
     startMinutes += 30
   ) {
     const startTimeString = minutesToTime(startMinutes)
     const endTimeString = minutesToTime(startMinutes + durationMinutes)
-
     const candidateStartTime = createJapanDateTime(date, startTimeString)
     const candidateEndTime = createJapanDateTime(date, endTimeString)
-
+    const canFinishInTime = startMinutes + durationMinutes <= closingMinutes
     /**
      * 既存予約と候補時間が重なっているか確認する。
      *
@@ -260,7 +259,7 @@ export async function getAvailableTimeSlots(
      */
     timeSlots.push({
       time: startTimeString,
-      isAvailable: !isOverlapping,
+      isAvailable: canFinishInTime && !isOverlapping,
     })
   }
 

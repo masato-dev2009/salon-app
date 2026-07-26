@@ -4,11 +4,18 @@ import { Sheet, SheetContent, SheetTrigger } from '../../../../ui/sheet'
 import { ArrowButton } from '../../../../ui/arrow-button'
 import { Logo } from '../../../../ui/logo'
 import { handleAnchorClick } from './handleAnchorClick'
+import { cn } from '@/lib/utils'
+import { container } from '@/components/layout/common/container'
 
 export function MobileNav() {
   return (
     <div>
-      <div className='flex items-center justify-between border-b border-[#a4a4a4]'>
+      <div
+        className={cn(
+          container,
+          'flex items-center justify-between border-b border-[#a4a4a4]',
+        )}
+      >
         <Logo />
         <ArrowButton
           href='/reservation/new/'
@@ -17,8 +24,8 @@ export function MobileNav() {
         />
       </div>
       <nav>
-        <ul className='font-cormorant flex justify-center text-[20px] font-light tracking-widest'>
-          <li className='border-l border-[#00000052] px-2'>
+        <ul className='font-cormorant flex justify-center text-[15px] font-light tracking-widest md:text-[25px]'>
+          <li className='border-l border-[#00000052] px-2 md:px-6'>
             <a
               href='#concept'
               className='hover:opacity-50'
@@ -29,7 +36,7 @@ export function MobileNav() {
               Concept
             </a>
           </li>
-          <li className='border-x border-[#00000052] px-2'>
+          <li className='border-x border-[#00000052] px-2 md:px-6'>
             <a
               href='#menu'
               className='hover:opacity-50'
@@ -40,7 +47,7 @@ export function MobileNav() {
               Menu
             </a>
           </li>
-          <li className='px-2'>
+          <li className='px-2 md:px-6'>
             <a
               href='#staff'
               className='hover:opacity-50'
@@ -51,7 +58,7 @@ export function MobileNav() {
               Stylist
             </a>
           </li>
-          <li className='border-x border-[#00000052] px-2'>
+          <li className='border-x border-[#00000052] px-2 md:px-6'>
             <a
               href='#reservation'
               className='hover:opacity-50'

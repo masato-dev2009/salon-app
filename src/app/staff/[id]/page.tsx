@@ -7,6 +7,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import Image from 'next/image'
 import { ArrowButton } from '@/components/ui/arrow-button'
 import { FixedHeader } from '@/components/layout/common/FixedHeader'
+import { cn } from '@/lib/utils'
+import { container } from '@/components/layout/common/container'
 
 type Props = {
   params: Promise<{
@@ -32,19 +34,19 @@ export default async function StaffPage({ params }: Props) {
   return (
     <main className='bg-[rgb(247,243,237)]'>
       <FixedHeader>
-        <div className='flex items-center justify-between'>
+        <div className={cn(container, 'flex items-center justify-between')}>
           <Logo href='/' />
           <ArrowButton href='/reservation/new/' children='ご予約はこちら' />
         </div>
       </FixedHeader>
-      <section className='mx-auto max-w-7xl px-6 pt-24'>
+      <section className='mx-auto px-6 pt-24 md:max-w-7xl md:px-0'>
         <div className='flex flex-col items-center'>
           <SectionHeading
             englishTitle='Stylist'
             title='スタイリスト一覧'
             className='text-2xl'
           />
-          <Card className='overflow-hidden md:w-lg'>
+          <Card className='w-full overflow-hidden md:w-lg'>
             <CardContent className='text-muted-foreground m-3 leading-6'>
               <div className='relative mb-6 aspect-square overflow-hidden rounded-lg'>
                 <Image

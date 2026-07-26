@@ -2,6 +2,8 @@ import { prisma } from '@/lib/prisma'
 import { MenuCard } from './MenuCard'
 import { SectionHeading } from '../../common/SectionHeading'
 import { ArrowButton } from '@/components/ui/arrow-button'
+import { cn } from '@/lib/utils'
+import { container } from '../../common/container'
 
 export async function MenuSection() {
   const menus = await prisma.menu.findMany({
@@ -12,7 +14,7 @@ export async function MenuSection() {
   })
   return (
     <section id='menu' className='py-32'>
-      <div className='mx-auto max-w-7xl px-6'>
+      <div className={cn(container)}>
         <div className='flex flex-col items-center justify-center'>
           <SectionHeading
             englishTitle='MENU'

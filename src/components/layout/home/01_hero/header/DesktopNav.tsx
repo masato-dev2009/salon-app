@@ -3,10 +3,12 @@ import Link from 'next/link'
 import { Logo } from '../../../../ui/logo'
 import { ArrowButton } from '../../../../ui/arrow-button'
 import { handleAnchorClick } from './handleAnchorClick'
+import { cn } from '@/lib/utils'
+import { container } from '@/components/layout/common/container'
 
 export function DesktopNav() {
   return (
-    <div className='flex items-center'>
+    <div className={cn(container, 'flex items-center justify-between')}>
       <Logo href='/' />
       <nav className='flex-1'>
         <ul className='font-cormorant flex justify-center text-[20px] font-light tracking-widest'>

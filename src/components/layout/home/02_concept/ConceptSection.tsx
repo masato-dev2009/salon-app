@@ -1,9 +1,13 @@
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
+import { container } from '../../common/container'
 
 export function ConceptSection() {
   return (
     <section id='concept' className='bg-[#f7f3ed] pt-32'>
-      <div className='mx-auto grid max-w-7xl gap-16 px-6 md:grid-cols-2 md:items-start'>
+      <div
+        className={cn(container, 'grid gap-16 md:grid-cols-2 md:items-start')}
+      >
         <div className='relative aspect-square overflow-hidden rounded-sm'>
           <Image
             src='/image/home/concept.png'

@@ -3,6 +3,8 @@ import styles from '@/app/style.module.css'
 import { DesktopNav } from './header/DesktopNav'
 import { MobileNav } from './header/MobileNav'
 import { FixedHeader } from '../../common/FixedHeader'
+import { cn } from '@/lib/utils'
+import { container } from '../../common/container'
 
 export function HeroSection() {
   return (
@@ -23,7 +25,12 @@ export function HeroSection() {
           <MobileNav />
         </div>
       </FixedHeader>
-      <div className='relative z-10 mx-auto flex min-h-screen max-w-6xl items-center px-6'>
+      <div
+        className={cn(
+          container,
+          'relative z-10 flex min-h-screen items-center',
+        )}
+      >
         <div className='w-full'>
           <h1
             className={`${styles.textOutline} text-2xl leading-relaxed font-medium tracking-widest md:text-6xl`}
