@@ -17,8 +17,8 @@ export function MobileNav() {
         />
       </div>
       <nav>
-        <ul className='font-cormorant flex justify-center text-[20px] font-light tracking-wide'>
-          <li className='px-2'>
+        <ul className='font-cormorant flex justify-center text-[20px] font-light tracking-widest'>
+          <li className='border-l border-[#00000052] px-2'>
             <a
               href='#concept'
               className='hover:opacity-50'
@@ -29,7 +29,7 @@ export function MobileNav() {
               Concept
             </a>
           </li>
-          <li className='md px-2'>
+          <li className='border-x border-[#00000052] px-2'>
             <a
               href='#menu'
               className='hover:opacity-50'
@@ -51,7 +51,7 @@ export function MobileNav() {
               Stylist
             </a>
           </li>
-          <li className='md:md px-2'>
+          <li className='border-x border-[#00000052] px-2'>
             <a
               href='#reservation'
               className='hover:opacity-50'
@@ -62,7 +62,7 @@ export function MobileNav() {
               Reserve
             </a>
           </li>
-          <li>
+          {/* <li>
             <Sheet>
               <SheetTrigger asChild>
                 <button className='outline-none'>
@@ -85,7 +85,7 @@ export function MobileNav() {
                 </div>
               </SheetContent>
             </Sheet>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </div>

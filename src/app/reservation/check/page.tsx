@@ -77,8 +77,8 @@ export default async function ReservationCheckPage({
 
   return (
     <main className='pt-32'>
-      <section className='mx-auto max-w-3xl space-y-8'>
-        <h1 className='text-3xl font-semibold'>CONFIRM</h1>
+      <section className='mx-auto space-y-8 px-6 md:max-w-3xl'>
+        <h1 className='text-center text-3xl font-semibold'>CONFIRM</h1>
 
         <div className='space-y-4 rounded-xl border p-6'>
           <p>Stylist : {staff?.displayName}</p>
@@ -91,9 +91,11 @@ export default async function ReservationCheckPage({
 
           <p>Time :{time}</p>
         </div>
-        <form action={handleSubmit}>
-          <ArrowButton type='submit' children={'確認'} />
-        </form>
+        <div className='flex justify-center'>
+          <form action={handleSubmit}>
+            <ArrowButton type='submit' children={'確認'} />
+          </form>
+        </div>
       </section>
     </main>
   )

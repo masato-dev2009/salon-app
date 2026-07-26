@@ -16,10 +16,10 @@ export function HeroSection() {
       />
       <div className='absolute inset-0 bg-white/40' />
       <FixedHeader>
-        <div className='hidden md:block'>
+        <div className='hidden lg:block'>
           <DesktopNav />
         </div>
-        <div className='md:hidden'>
+        <div className='lg:hidden'>
           <MobileNav />
         </div>
       </FixedHeader>
