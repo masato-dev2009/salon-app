@@ -1,12 +1,12 @@
-import { ArrowButton } from '@/components/ui/arrow-button'
-import { prisma } from '@/lib/prisma'
-import { createReservation } from '@/actions/reservation/createReservation'
-import { redirect } from 'next/navigation'
-import { isBusinessClosed } from '@/lib/reservation/isBusinessClosed'
-import { isClosedDay } from '@/lib/reservation/isClosedDay'
-import { isStaffHoliday } from '@/lib/reservation/isStaffHoliday'
+// src/app/reservation/check/page.tsx
 
-type Props = {
+import { redirect } from 'next/navigation'
+import { prisma } from '@/lib/prisma'
+import { getAvailableTimeSlots } from '@/actions/reservation/getAvailableTimeSlots'
+import { createReservation } from '@/actions/reservation/createReservation'
+import { ArrowButton } from '@/components/ui/arrow-button'
+
+type ReservationCheckPageProps = {
   searchParams: Promise<{
     staffId?: string
     menuId?: string
@@ -15,51 +15,27 @@ type Props = {
   }>
 }
 
-export default async function ReservationCheckPage({ searchParams }: Props) {
+/**
+ * URLから渡された予約内容を確認し、
+ * 問題がなければ予約確認画面を表示する。
+ */
+export default async function ReservationCheckPage({
+  searchParams,
+}: ReservationCheckPageProps) {
   const { staffId, menuId, date, time } = await searchParams
 
+  /**
+   * 必須パラメータが不足している場合は、
+   * 予約入力画面へ戻す。
+   */
   if (!staffId || !menuId || !date || !time) {
-    return <div>不正なアクセスです。</div>
+    redirect('/reservation/new')
   }
 
-  // 選択された日付と時間から予約開始日時を作る
-
-  const startTime = new Date(date)
-
-  const [hour, minute] = time.split(':').map(Number)
-
-  startTime.setHours(hour, minute, 0, 0)
-
-  // 毎週の店舗定休日を確認
-
-  const businessClosed = await isBusinessClosed(startTime)
-
-  if (businessClosed) {
-    return <div>この日は店舗の定休日です。</div>
-  }
-
-  // 日付指定の臨時休業を確認
-
-  const closedDay = await isClosedDay(startTime)
-
-  if (closedDay) {
-    return <div>{closedDay.reason ?? 'この日は臨時休業です。'}</div>
-  }
-
-  // 選択されたスタッフが休みか確認
-
-  const staffHoliday = await isStaffHoliday(staffId, startTime)
-
-  if (staffHoliday) {
-    return <div>選択されたスタッフはこの日お休みです。</div>
-  }
-  const reservationInput = { staffId, menuId, date, time }
-
-  async function handleSubmit() {
-    'use server'
-    await createReservation(reservationInput)
-  }
-
+  /**
+   * URLから渡されたスタッフとメニューが
+   * 実際に存在するか確認する。
+   */
   const [staff, menu] = await Promise.all([
     prisma.staff.findUnique({
       where: {
@@ -73,6 +49,31 @@ export default async function ReservationCheckPage({ searchParams }: Props) {
       },
     }),
   ])
+
+  if (!staff || !menu) {
+    redirect('/reservation/new')
+  }
+
+  /**
+   * 指定された時間が現在も予約可能か再確認する。
+   *
+   * URLを書き換えた場合や、
+   * 確認画面を開いている間に別の予約が入った場合を防ぐ。
+   */
+  const timeSlots = await getAvailableTimeSlots({
+    staffId,
+    menuId,
+    date,
+  })
+
+  const selectedSlot = timeSlots.find((slot) => slot.time === time)
+
+  if (!selectedSlot?.isAvailable) {
+    redirect('/reservation/new')
+  }
+  const reservationInput = { staffId, menuId, date, time }
+
+  const handleSubmit = createReservation.bind(null, reservationInput)
 
   return (
     <main className='pt-32'>
