@@ -111,12 +111,13 @@ AND
 
 ---
 
-##スクリーンショット
+## スクリーンショット
 <img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 06 47" src="https://github.com/user-attachments/assets/9a102031-b9f2-450f-a73f-b9ade7b7c211" />
 <img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 06 56" src="https://github.com/user-attachments/assets/bf9b2586-4c93-4f38-a3ac-1c31708d1401" />
 <img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 07 01" src="https://github.com/user-attachments/assets/b723362f-bb62-41a3-8e42-094ac1c53395" />
 <img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 07 10" src="https://github.com/user-attachments/assets/100a8771-9c0f-46ab-8ad9-8cc60fbbc09a" />
-<img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 06 29" src="https://github.com/user-attachments/assets/f47edfe8-1065-4876-a236-1cb78648b08f" />
+<img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 31 03" src="https://github.com/user-attachments/assets/b509be9e-e241-42e4-bc6c-872b2e3d61dc" />
+<img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 30 46" src="https://github.com/user-attachments/assets/d918e6c3-5445-45ee-a943-ddfba5fcfa52" />
 
 
 
