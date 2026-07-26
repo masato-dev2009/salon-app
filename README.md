@@ -10,8 +10,7 @@
 
 ### URL
 
-[https://xxxxx.vercel.app
-](https://salon-app-dun-alpha.vercel.app/)
+(https://salon-app-dun-alpha.vercel.app/)
 ---
 
 ## 使用技術
