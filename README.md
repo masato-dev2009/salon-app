@@ -1,4 +1,5 @@
 # 美容室向けの予約システム
+<img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 06 47" src="https://github.com/user-attachments/assets/9a102031-b9f2-450f-a73f-b9ade7b7c211" />
 
 実際の予約システムを参考に、スタッフ・メニュー・営業時間・施術時間を考慮した予約機能を実装しました。
 
@@ -112,7 +113,6 @@ AND
 ---
 
 ## スクリーンショット
-<img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 06 47" src="https://github.com/user-attachments/assets/9a102031-b9f2-450f-a73f-b9ade7b7c211" />
 <img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 06 56" src="https://github.com/user-attachments/assets/bf9b2586-4c93-4f38-a3ac-1c31708d1401" />
 <img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 07 01" src="https://github.com/user-attachments/assets/b723362f-bb62-41a3-8e42-094ac1c53395" />
 <img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 07 10" src="https://github.com/user-attachments/assets/100a8771-9c0f-46ab-8ad9-8cc60fbbc09a" />
