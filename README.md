@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 美容室予約管理システム
 
-## Getting Started
+美容室向けの予約管理システムです。
 
-First, run the development server:
+実際の予約システムを参考に、スタッフ・メニュー・営業時間・施術時間を考慮した予約機能を実装しました。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## デモ
+
+### URL
+
+https://xxxxx.vercel.app
+
+---
+
+## 使用技術
+
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Prisma
+- PostgreSQL (Neon)
+- Vercel
+
+---
+
+## 主な機能
+
+### 予約機能
+
+- スタッフ選択
+- メニュー選択
+- 日付選択
+- 時間選択
+- 予約作成
+- ダブルブッキング防止
+
+### 管理機能
+
+- スタッフ管理
+- メニュー管理
+- 営業時間管理
+- スタッフ勤務時間管理
+- 予約管理
+
+---
+
+## 工夫した点
+
+### 営業時間と施術時間を考慮した予約ロジック
+
+メニューごとの施術時間を考慮し、営業時間内に施術が終了する時間のみ予約可能となるよう実装しました。
+
+予約できない時間帯も表示したままグレーアウトすることで、営業時間を分かりやすく表現しています。
+
+---
+
+### ダブルブッキング防止
+
+既存予約との時間重複を判定し、同じスタッフに重複した予約が入らないようにしています。
+
+判定条件
+
+```text
+既存予約開始 < 新規予約終了
+AND
+既存予約終了 > 新規予約開始
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 営業時間の優先順位
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+営業時間は以下の優先順位で取得します。
 
-## Learn More
+1. スタッフ勤務時間
+2. 店舗営業時間
+3. デフォルト営業時間
 
-To learn more about Next.js, take a look at the following resources:
+これによりスタッフごとの勤務時間にも対応しています。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## データベース設計
 
-## Deploy on Vercel
+- User
+- Staff
+- Menu
+- Reservation
+- BusinessHour
+- StaffSchedule
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 今後追加予定
+
+- 顧客管理
+- 売上管理
+- メール通知
+- Googleカレンダー連携
+- LINE連携
+
+---
+
+## 学んだこと
+
+- Prismaを用いたデータベース設計
+- Server Actionsを利用したサーバーサイド処理
+- 営業時間・施術時間を考慮した予約ロジック
+- ダブルブッキング防止アルゴリズム
+- 実務を意識した管理画面設計
