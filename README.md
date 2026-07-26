@@ -1,4 +1,4 @@
-# 美容室予約管理システム
+<img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 07 01" src="https://github.com/user-attachments/assets/b723362f-bb62-41a3-8e42-094ac1c53395" /># 美容室予約管理システム
 
 美容室向けの予約管理システムです。
 
@@ -108,4 +108,16 @@ AND
 - Server Actionsを利用したサーバーサイド処理
 - 営業時間・施術時間を考慮した予約ロジック
 - ダブルブッキング防止アルゴリズム
+
 - 実務を意識した管理画面設計
+
+---
+
+##スクリーンショット
+<img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 06 47" src="https://github.com/user-attachments/assets/9a102031-b9f2-450f-a73f-b9ade7b7c211" />
+<img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 06 56" src="https://github.com/user-attachments/assets/bf9b2586-4c93-4f38-a3ac-1c31708d1401" />
+![Uploading スクリーンショット 2026-07-27 0.07.01.png…]()
+<img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 06 29" src="https://github.com/user-attachments/assets/f47edfe8-1065-4876-a236-1cb78648b08f" />
+<img width="1440" height="900" alt="スクリーンショット 2026-07-27 0 07 10" src="https://github.com/user-attachments/assets/100a8771-9c0f-46ab-8ad9-8cc60fbbc09a" />
+
+
