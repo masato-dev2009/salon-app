@@ -11,6 +11,8 @@ import { ArrowButton } from '@/components/ui/arrow-button'
 import { getAvailableTimeSlots } from '@/actions/reservation/getAvailableTimeSlots'
 import { defaultsTimeSlots, type TimeSlot } from '@/app/constant/timeSlots'
 import { container } from '@/components/layout/common/container'
+import { CustomerForm } from './CustomerForm'
+import { CustomerData } from './ReservationCheck'
 
 type ReservationNewFormProps = {
   staffList: Staff[]
@@ -30,6 +32,9 @@ export function ReservationNewForm({
   businessClosedWeekdays,
   staffHolidaySchedules,
 }: ReservationNewFormProps) {
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
   const [selectedStaffId, setSelectedStaffId] = useState('')
   const [selectedMenuId, setSelectedMenuId] = useState('')
   const [selectedStaff, setSelectedStaff] = useState('')
@@ -39,18 +44,49 @@ export function ReservationNewForm({
   const [timeSlots, setTimeSlots] = useState<TimeSlot[]>(defaultsTimeSlots)
 
   /**
+   * 確認画面から戻ったとき、
+   * 保存済みの顧客情報を入力欄へ復元する。
+   */
+  useEffect(() => {
+    const savedCustomer = sessionStorage.getItem('reservationCustomer')
+
+    if (!savedCustomer) {
+      return
+    }
+
+    try {
+      const parsedCustomer = JSON.parse(savedCustomer) as CustomerData
+
+      setName(parsedCustomer.customerName ?? '')
+
+      setPhone(parsedCustomer.customerPhone ?? '')
+
+      setEmail(parsedCustomer.customerEmail ?? '')
+    } catch (error) {
+      console.error('顧客情報の復元に失敗しました:', error)
+
+      sessionStorage.removeItem('reservationCustomer')
+    }
+  }, [])
+  /**
    * 確認画面へ進むために必要な項目が、
    * すべて選択されているか判定する。
    */
+  const hasContact = Boolean(phone || email)
   const canProceed = Boolean(
-    selectedStaffId && selectedMenuId && selectedDate && selectedTime,
+    name &&
+    hasContact &&
+    selectedStaffId &&
+    selectedMenuId &&
+    selectedDate &&
+    selectedTime,
   )
 
   /**
    * 時間選択に必要な項目が選択されているか判定する。
    */
   const canSelectTime = Boolean(
-    selectedStaffId && selectedMenuId && selectedDate,
+    name && hasContact && selectedStaffId && selectedMenuId && selectedDate,
   )
 
   /**
@@ -165,6 +201,14 @@ export function ReservationNewForm({
       </p>
 
       <div className='mt-12 space-y-12'>
+        <CustomerForm
+          customerName={name}
+          phone={phone}
+          email={email}
+          onCustomerNameChange={setName}
+          onPhoneChange={setPhone}
+          onEmailChange={setEmail}
+        />
         <StaffSelector
           staffList={staffList}
           selectedStaffId={selectedStaffId}
@@ -197,7 +241,7 @@ export function ReservationNewForm({
           />
         </div>
 
-        <div className='rounded-xl border p-6 text-sm'>
+        <div className='text-md mx-auto max-w-2xs space-y-3 rounded-xl border p-6'>
           <p>スタッフ: {selectedStaff || '未選択'}</p>
           <p>メニュー: {selectedMenu || '未選択'}</p>
           <p>日付: {selectedDate?.toLocaleDateString() ?? '未選択'}</p>
@@ -209,6 +253,17 @@ export function ReservationNewForm({
         <ArrowButton
           href={checkPageUrl}
           className={cn(!canProceed && 'pointer-events-none opacity-50')}
+          onClick={() =>
+            //顧客情報を一時保存
+            sessionStorage.setItem(
+              'reservationCustomer',
+              JSON.stringify({
+                customerName: name,
+                customerPhone: phone,
+                customerEmail: email,
+              }),
+            )
+          }
         >
           確認
         </ArrowButton>

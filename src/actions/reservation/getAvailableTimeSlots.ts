@@ -1,5 +1,3 @@
-// src/actions/reservation/getAvailableTimeSlots.ts
-
 'use server'
 
 import type { TimeSlot } from '@/app/constant/timeSlots'

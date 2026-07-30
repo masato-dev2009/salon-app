@@ -1,5 +1,3 @@
-// src/actions/reservation/createReservation.ts
-
 'use server'
 
 import { redirect } from 'next/navigation'
@@ -13,6 +11,9 @@ type CreateReservationInput = {
   menuId: string
   date: string
   time: string
+  customerName: string
+  customerPhone: string
+  customerEmail: string
 }
 
 /**
@@ -25,7 +26,15 @@ type CreateReservationInput = {
  * - 問題なければ予約を作成する
  */
 export async function createReservation(input: CreateReservationInput) {
-  const { staffId, menuId, date, time } = input
+  const {
+    staffId,
+    menuId,
+    date,
+    time,
+    customerName,
+    customerPhone,
+    customerEmail,
+  } = input
 
   // 選択されたメニューを取得
   const menu = await prisma.menu.findUnique({
@@ -90,11 +99,12 @@ export async function createReservation(input: CreateReservationInput) {
     data: {
       staffId,
       menuId,
+      customerName,
+      customerPhone,
+      customerEmail,
       startTime,
       endTime,
       status: 'PENDING',
     },
   })
-
-  redirect('/reservation/complete')
 }

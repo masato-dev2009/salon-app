@@ -1,10 +1,7 @@
-// src/app/reservation/check/page.tsx
-
 import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { getAvailableTimeSlots } from '@/actions/reservation/getAvailableTimeSlots'
-import { createReservation } from '@/actions/reservation/createReservation'
-import { ArrowButton } from '@/components/ui/arrow-button'
+import { ReservationCheck } from '@/components/features/reservation/ReservationCheck'
 
 type ReservationCheckPageProps = {
   searchParams: Promise<{
@@ -71,32 +68,16 @@ export default async function ReservationCheckPage({
   if (!selectedSlot?.isAvailable) {
     redirect('/reservation/new')
   }
-  const reservationInput = { staffId, menuId, date, time }
-
-  const handleSubmit = createReservation.bind(null, reservationInput)
 
   return (
-    <main className='pt-32'>
-      <section className='mx-auto space-y-8 px-6 md:max-w-3xl'>
-        <h1 className='text-center text-3xl font-semibold'>CONFIRM</h1>
-
-        <div className='space-y-4 rounded-xl border p-6'>
-          <p>Stylist : {staff?.displayName}</p>
-
-          <p>Menu : {menu?.name}</p>
-
-          <p>Price : ¥{menu?.price.toLocaleString()}</p>
-
-          <p>Date :{new Date(date).toLocaleDateString()}</p>
-
-          <p>Time :{time}</p>
-        </div>
-        <div className='flex justify-center'>
-          <form action={handleSubmit}>
-            <ArrowButton type='submit' children={'確認'} />
-          </form>
-        </div>
-      </section>
-    </main>
+    <ReservationCheck
+      staffId={staffId}
+      staffName={staff.displayName}
+      menuId={menuId}
+      menuName={menu.name}
+      menuPrice={menu.price}
+      date={date}
+      time={time}
+    />
   )
 }
