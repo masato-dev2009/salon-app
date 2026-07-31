@@ -46,14 +46,14 @@ export async function createReservation(input: CreateReservationInput) {
   }
 
   // 予約開始日時を作成
-  const startTime = new Date(date)
-  const [hour, minute] = time.split(':').map(Number)
-  startTime.setHours(hour, minute, 0, 0)
+  // 予約画面の日付と時刻は、日本時間として明示的にDateへ変換する
+  const startTime = new Date(`${date}T${time}:00+09:00`)
 
-  // 予約終了日時を作成
-  // Dateはオブジェクトなので、startTimeを直接変更しないようにコピーする
-  const endTime = new Date(startTime)
-  endTime.setMinutes(endTime.getMinutes() + menu.durationMin)
+  if (Number.isNaN(startTime.getTime())) {
+    throw new Error('予約日時が正しくありません')
+  }
+  // メニューの施術時間を追加して終了日時を作る
+  const endTime = new Date(startTime.getTime() + menu.durationMin * 60 * 1000)
 
   const businessHour = await isBusinessClosed(startTime)
 

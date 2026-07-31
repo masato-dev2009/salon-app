@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createReservation } from '@/actions/reservation/createReservation'
 import { ArrowButton } from '@/components/ui/arrow-button'
 import { useRouter } from 'next/navigation'
