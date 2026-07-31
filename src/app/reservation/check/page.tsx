@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { getAvailableTimeSlots } from '@/actions/reservation/getAvailableTimeSlots'
 import { ReservationCheck } from '@/components/features/reservation/ReservationCheck'
+import { ReservationConflict } from '@/components/features/reservation/ReservationConflict'
 
 type ReservationCheckPageProps = {
   searchParams: Promise<{
@@ -66,7 +67,7 @@ export default async function ReservationCheckPage({
   const selectedSlot = timeSlots.find((slot) => slot.time === time)
 
   if (!selectedSlot?.isAvailable) {
-    redirect('/reservation/new')
+    return <ReservationConflict />
   }
 
   return (
