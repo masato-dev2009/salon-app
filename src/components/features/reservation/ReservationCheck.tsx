@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { createReservation } from '@/actions/reservation/createReservation'
 import { ArrowButton } from '@/components/ui/arrow-button'
 import { useRouter } from 'next/navigation'
+import { ReservationConflict } from './ReservationConflict'
 
 /**
  * check/page.tsxから受け取る予約情報
@@ -57,6 +58,8 @@ export function ReservationCheck({
   //完了ページに遷移する
   const router = useRouter()
 
+  // ダブルブッキング時の画面切り替え
+  const [isConflict, setIsConflict] = useState(false)
   /**
    * コンポーネント表示後にsessionStorageから顧客情報を取得する
    *
@@ -112,7 +115,7 @@ export function ReservationCheck({
     setErrorMessage(null)
 
     try {
-      await createReservation({
+      const result = await createReservation({
         staffId,
         menuId,
         date,
@@ -122,6 +125,11 @@ export function ReservationCheck({
         customerEmail,
       })
 
+      if (!result.success) {
+        setIsConflict(true)
+        setIsSubmitting(false)
+        return
+      }
       // 予約登録成功後に一時保存データを削除
       sessionStorage.removeItem('reservationCustomer')
 
@@ -136,6 +144,9 @@ export function ReservationCheck({
 
       setIsSubmitting(false)
     }
+  }
+  if (isConflict) {
+    return <ReservationConflict />
   }
   return (
     <main className='pt-32'>

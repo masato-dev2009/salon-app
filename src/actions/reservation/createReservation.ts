@@ -1,6 +1,5 @@
 'use server'
 
-import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import { isClosedDay } from '@/lib/reservation/isClosedDay'
 import { isStaffHoliday } from '@/lib/reservation/isStaffHoliday'
@@ -16,6 +15,10 @@ type CreateReservationInput = {
   customerEmail: string
 }
 
+type CreateReservationResult = {
+  success: boolean
+  message?: string
+}
 /**
  * 予約を作成するServer Action
  *
@@ -25,7 +28,9 @@ type CreateReservationInput = {
  * - 既存予約と重なっていないか確認する
  * - 問題なければ予約を作成する
  */
-export async function createReservation(input: CreateReservationInput) {
+export async function createReservation(
+  input: CreateReservationInput,
+): Promise<CreateReservationResult> {
   const {
     staffId,
     menuId,
@@ -91,7 +96,11 @@ export async function createReservation(input: CreateReservationInput) {
   })
 
   if (existingReservation) {
-    throw new Error('この時間はすでに予約されています')
+    return {
+      success: false,
+      message:
+        'この時間は他のお客様が先に予約しました。時間を選び直してください。',
+    }
   }
 
   // 予約を作成
@@ -107,4 +116,7 @@ export async function createReservation(input: CreateReservationInput) {
       status: 'PENDING',
     },
   })
+  return {
+    success: true,
+  }
 }
