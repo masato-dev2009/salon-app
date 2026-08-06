@@ -18,18 +18,32 @@ type Props = {
 
 export default async function StaffPage({ params }: Props) {
   const { id } = await params
-  const staff = await prisma.staff.findUnique({
-    where: {
-      id: id,
-    },
-  })
+
+  const [staff, staffList] = await Promise.all([
+    prisma.staff.findUnique({
+      where: {
+        id,
+      },
+    }),
+
+    prisma.staff.findMany({
+      where: {
+        id: {
+          not: id,
+        },
+      },
+
+      orderBy: {
+        createdAt: 'asc',
+      },
+    }),
+  ])
+
+  if (!staff) {
+    return null
+  }
+
   const noImageSrc = '/image/home/no_image.png'
-  const staffList = await prisma.staff.findMany({
-    orderBy: {
-      createdAt: 'asc',
-    },
-  })
-  if (!staff) return
 
   return (
     <main className='bg-[rgb(247,243,237)]'>

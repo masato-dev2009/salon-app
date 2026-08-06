@@ -53,7 +53,9 @@ export function ArrowButton({
         className={buttonClassName}
         {...props}
       >
-        <Link href={href}>{content}</Link>
+        <Link href={href} prefetch>
+          {content}
+        </Link>
       </Button>
     )
   }
