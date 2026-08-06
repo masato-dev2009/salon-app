@@ -48,15 +48,8 @@ export function Footer() {
           </div>
         </div>
         {/* Copyright */}
-        <div className=''>
-          <div className='grid justify-center border-t border-[#f7f3ed]/20 pt-6 text-center text-sm text-[#f7f3ed]/60'>
-            <div className='flex gap-6'>
-              <Link href='/menu'>Menu</Link>
-              <Link href='/staff'>Staff</Link>
-              <Link href='/reservations'>Reservation</Link>
-            </div>
-            <p className='pt-3'>© 2026 Lueur hair salon</p>
-          </div>
+        <div className='flex justify-center border-t border-[#f7f3ed]/20 pt-3 text-center text-sm text-[#f7f3ed]/60'>
+          <p>© 2026 Lueur hair salon</p>
         </div>
       </div>
     </footer>
